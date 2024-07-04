@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import './Expenseform.css'
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
  const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("")
   const [enteredDate, setEnteredDate] = useState("")
+  const [enteredlocation, setEnteredlocation] = useState("")
   
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
@@ -15,17 +16,22 @@ const ExpenseForm = () => {
   const dateChangeHandler=(e)=>{
     setEnteredDate(e.target.value)
   }
+  const locationChangeHandler=(e)=>{
+    setEnteredlocation(e.target.value)
+  }
   const SubmitHandler=(e)=>{
     e.preventDefault()
     const objData={
-        Title:enteredTitle,
-        Amount:enteredAmount,
-        Date:new Date(enteredDate)
+        title:enteredTitle,
+        price:enteredAmount,
+        date:new Date(enteredDate),
+        location:enteredlocation
       }
-      console.log(objData)
+      props.onSaveExpenseData(objData)
       setEnteredTitle("")
       setEnteredAmount("")
       setEnteredDate("")
+      setEnteredlocation("")
       
     }
     return (
@@ -36,8 +42,12 @@ const ExpenseForm = () => {
               <input type="text" id="title"  value={enteredTitle} onChange={titleChangeHandler} />
             </div>
             <div className="new-expense__control">
-              <label htmlFor="amount">Amount</label>
-              <input type="number" id="amount" value={enteredAmount} onChange={amountChangeHandler} />
+            <label htmlFor="location">location</label>
+              <input type="text" id="title"  value={enteredlocation} onChange={locationChangeHandler} />
+            </div>
+            <div className="new-expense__control">
+              <label htmlFor="amount">price</label>
+              <input type="number" id="price" value={enteredAmount} onChange={amountChangeHandler} />
             </div>
             <div className="new-expense__control">
               <label htmlFor="date">Date</label>
